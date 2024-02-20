@@ -1,0 +1,113 @@
+<html>
+    <head>    
+        <title>Items manager</title>
+    </head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 20%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+        
+        span{
+            color: black;
+        }
+        input{
+            border-radius: 7px;
+            border: none;
+            padding: 15px;
+        }
+        input:hover{
+            background-color: aqua;
+        }
+    </style> -->
+    
+    <body ng-app="Prog10">
+        <h1>Shopping Cart</h1>
+        <div ng-controller="manage">
+            <input placeholder="Enter an item to be added" id="it" ng-model="items">&emsp;
+            <input type="button" value="ADD" ng-click="additems()"><br><br>
+            <h3>List of items::</h3>
+            <table border="1">
+                <tr>
+                    <th>SN no</th>
+                    <th>Items</th>
+                    <th>Action</th>
+                </tr>
+                <tr ng-repeat="i in itemlist">
+                    <td>{{$index+1}}</td>
+                    <td>{{i}}</td>
+                    <td><input type="button" value="REMOVE" ng-click="removeitems(i)"></td>
+                </tr>
+            </table>
+            <br>
+            <p><i class="fa fa-shopping-cart" style="font-size:48px;color:red"></i><span>{{itemlist.length}}</span></p>
+        </div>
+    </body>
+</html>
+<script>
+    var a = angular.module("Prog10",[]);
+    a.controller("manage",function($scope)
+    {
+        $scope.itemlist=["Apple","Cherry"];
+        $scope.additems = function()
+        {
+            if($scope.items && $scope.itemlist.indexOf($scope.items)==-1)
+            {
+                $scope.itemlist.push($scope.items);
+                $scope.items="";
+            }
+            else{
+                if($scope.items)
+                {
+                    alert("Item already exists!");
+                    document.getElementById("it").focus();
+                    return false;
+                }
+                else{
+                    alert("Enter an element to be added...")
+                    document.getElementById("it").focus();
+                    return false;
+                }
+            }
+        }
+        $scope.removeitems = function(item) {
+    var verify = confirm("Do you really want to delete '" + item + "'?");
+    if (verify) {
+        var ind = $scope.itemlist.indexOf(item);
+        $scope.itemlist.splice(ind, 1);
+    }
+}
+    });
+</script>

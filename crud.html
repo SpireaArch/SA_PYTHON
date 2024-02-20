@@ -1,0 +1,150 @@
+<html ng-app="crudApp">
+
+<head>
+    <title>AngularJS CRUD Application</title>
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #f0ad4e;
+            border: 1px solid #eea236;
+            color: #fff;
+        }
+
+        .delete-btn {
+            background-color: #d9534f;
+            border: 1px solid #d43f3a;
+            color: #fff;
+        }
+
+        .invalid-field {
+            border: 1px solid #d9534f;
+        }
+    </style> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="crudController">
+    <div>
+        <h1>User Management</h1>
+        <form ng-submit="addUser()">
+            <label for="name">Name:</label>
+            <input type="text" ng-model="name" required>
+            <label for="age">Age:</label>
+            <input type="text" ng-model="age" required>
+            <button type="submit">Add User</button>
+        </form>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>
+                        <span ng-hide="user.editingName">
+                            {{ user.name }}
+                            <button ng-click="editUserName(user)">Edit</button>
+                        </span>
+                        <input type="text" ng-model="user.updatedName" ng-blur="updateUserName(user)" ng-show="user.editingName" ng-required="true" class="invalid-field">
+                    </td>
+                    <td>
+                        <span ng-hide="user.editingAge">
+                            {{ user.age }}
+                            <button ng-click="editUserAge(user)">Edit</button>
+                        </span>
+                        <input type="text" ng-model="user.updatedAge" ng-blur="updateUserAge(user)" ng-show="user.editingAge" ng-required="true" class="invalid-field">
+                    </td>
+                    <td>
+                        <button ng-click="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        var app = angular.module('crudApp', []);
+
+        app.controller('crudController', function ($scope) {
+            $scope.users = [
+                { name: 'Ram', age: 25 },
+                { name: 'Sam', age: 30 },
+            ];
+
+            $scope.addUser = function () {
+                if ($scope.name && $scope.age) {
+                    $scope.users.push({ name: $scope.name, age: $scope.age });
+                    $scope.name = '';
+                    $scope.age = '';
+                }
+            };
+
+            $scope.editUserName = function (user) {
+                user.editingName = true;
+                user.updatedName = user.name;
+            };
+
+            $scope.updateUserName = function (user) {
+                if (user.updatedName !== null && user.updatedName.trim() !== '') {
+                    user.name = user.updatedName;
+                }
+                user.editingName = false;
+            };
+
+            $scope.editUserAge = function (user) {
+                user.editingAge = true;
+                user.updatedAge = user.age;
+            };
+
+            $scope.updateUserAge = function (user) {
+                if (user.updatedAge !== null && !isNaN(user.updatedAge)) {
+                    user.age = parseInt(user.updatedAge);
+                }
+                user.editingAge = false;
+            };
+
+            $scope.deleteUser = function (user) {
+                var index = $scope.users.indexOf(user);
+                $scope.users.splice(index, 1);
+            };
+        });
+    </script>
+</body>
+
+</html>

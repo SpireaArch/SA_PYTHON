@@ -29,12 +29,25 @@ screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Warship Game")
 clock = pygame.time.Clock()
 
+# Load background image
+background_image = pygame.image.load('ship.jpg')
+background_image = pygame.transform.scale(background_image, (WIDTH, HEIGHT))
+
+# Load player image
+player_image = pygame.image.load('players.png')
+player_image = pygame.transform.scale(player_image, (player_size, player_size))
+
+# Load enemy image
+enemy_image = pygame.image.load('enemy.png')
+enemy_image = pygame.transform.scale(enemy_image, (enemy_size, enemy_size))
+
 def draw_player():
-    pygame.draw.rect(screen, WHITE, player)
+    screen.blit(player_image, player)
 
 def draw_enemies():
     for enemy in enemies:
-        pygame.draw.rect(screen, RED, enemy)
+        screen.blit(enemy_image, enemy)
+
 def move_enemies():
     for enemy in enemies:
         enemy.y += enemy_speed
@@ -61,10 +74,11 @@ def main():
         if keys[pygame.K_RIGHT] and player.x < WIDTH - player_size:
             player.x += player_speed
 
-        screen.fill(BLUE)
-        draw_player()
+        screen.blit(background_image, (0, 0))  # Draw background image
+
         move_enemies()
         draw_enemies()
+        draw_player()
 
         # Collision detection
         for enemy in enemies:

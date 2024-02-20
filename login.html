@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html ng-app="loginApp">
+
+<head>
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            width: 300px;
+            margin: 20px auto;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        .error {
+            color: #d9534f;
+        }
+
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="loginController">
+    <h2>Login Form</h2>
+    <form name="loginForm" ng-submit="login()">
+        <label for="username">Username (min 3, max 8 characters):</label>
+        <input type="text" ng-model="username" ng-change="enableLoginButton()" ng-minlength="3" ng-maxlength="8" required>
+        <span class="error" ng-show="formSubmitted && loginForm.username.$error.required">Username is required</span>
+        <label for="password">Password (min 6, max 8 characters):</label>
+        <input type="password" ng-model="password" ng-minlength="1" ng-maxlength="8" required>
+        <span class="error" ng-show="formSubmitted && loginForm.password.$error.required">Password is required</span>
+        <button type="submit" ng-disabled="!Entered">Login</button>
+    </form>
+
+    <script>
+           var app = angular.module('loginApp', []);
+
+app.controller('loginController', function ($scope) {
+    $scope.formSubmitted = false;
+    $scope.Entered = false;
+    $scope.username = '';
+    $scope.password = '';
+    $scope.enableLoginButton = function () {
+        $scope.Entered = $scope.username && $scope.username.trim() !== '';
+    };
+
+    $scope.login = function () {
+        $scope.formSubmitted = true;
+        if ($scope.loginForm.$valid) {
+            if ($scope.username.toLowerCase() === 'user' && $scope.password === '123456') {
+                alert('Login successful!');
+                $scope.username = '';
+                $scope.password = '';
+            } else {
+                alert('Invalid username or password');
+                $scope.username = '';
+                $scope.password = '';
+            }
+        }
+    };
+});
+    </script>
+</body>
+
+</html>

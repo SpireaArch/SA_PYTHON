@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<title>Student Details in Uppercase</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<head>
+</head>
+<!-- <style>
+  body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input {
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        table {
+            width: 20%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .search-container {
+            margin-bottom: 20px;
+        }
+        
+        span{
+            color: black;
+        }
+        button{
+            border-radius: 7px;
+            border: none;
+            padding: 15px;
+        }
+        button:hover{
+            background-color: aqua;
+        }
+</style> -->
+<body ng-app="studDetailsUpperApp">
+  <h1>Student Details in Uppercase</h1>
+  <div ng-controller="studDetailsUpperAppCntrl">
+    <button ng-click="Upper()">Upper</button>
+    <button ng-click="Lower()">Lower</button>
+    <table border="1">
+      <tr>
+        <th>SLNO</th>
+        <th>NAME</th>
+      </tr>
+
+      <tr ng-repeat="student in studDetails">
+        <td>{{$index+1}}</td>
+        <td ng-show="upper">{{student|uppercase}}</td>
+        <td ng-show="lower">{{student|lowercase}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <script>
+    var app = angular.module("studDetailsUpperApp", []);
+    app.controller("studDetailsUpperAppCntrl", function ($scope) {
+      $scope.studDetails = [
+        "harish",
+        "kumar",
+        "chetan",
+        "prashanth",
+        "thanuja",
+      ];
+      $scope.upper = false;
+      $scope.lower = true;
+      $scope.Lower = function () {
+        $scope.upper = false;
+        $scope.lower = true;
+      };
+      $scope.Upper = function () {
+        $scope.upper = true;
+        $scope.lower = false;
+      };
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<html ng-app="employeeApp">
+
+<head>
+    <title>Employee Search</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="employeeController">
+    <h2>Employee Search</h2>
+    <div class="search-container">
+        <label for="search">Search : </label>
+        <input type="text" ng-model="searchText">
+        <input type="text" ng-model="searchsal">
+        <input type="button" value="Clear filters" ng-click="clear_filters()">
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="employee in filteredEmployees = (employees | filter:{name:searchText, salary:searchsal})">
+                <td>{{ employee.name }}</td>
+                <td>{{ employee.salary }}</td>
+            </tr>
+            <tr ng-if="filteredEmployees.length === 0">
+                <td colspan="2">No records found</td>
+            </tr>
+        </tbody>
+    </table>
+    <script>
+        var app = angular.module('employeeApp', []);    
+        app.controller('employeeController', function ($scope) {
+            $scope.employees = [
+                { name: 'Ram', salary: 80000 },
+                { name: 'Sam', salary: 100000 },
+                { name: 'Hari', salary: 90000 },
+                { name: 'Gita', salary: 75000 },
+                { name: 'Sarita', salary: 70000 }
+            ];
+            $scope.clear_filters = function(){
+                $scope.searchText = "";
+                $scope.searchsal = "";
+            };
+        });
+    </script>
+</body>
+</html>
